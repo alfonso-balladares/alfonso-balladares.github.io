@@ -1,0 +1,383 @@
+/* ============================================================
+   ESTILOS BASE (comunes a las tres plantillas)
+   Para cambiar el color principal no edites aquí:
+   usa "colorPrincipal" en contenido.js.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Curvas de movimiento: arrancan rápido y frenan suave, como algo con peso. */
+:root {
+  --curva: cubic-bezier(0.32, 0.72, 0, 1);
+  --resorte: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --vaiven: cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--letra-texto);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+a { color: var(--acento); text-underline-offset: 0.2em; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--acento); outline-offset: 3px; border-radius: 4px; }
+
+h1, h2, h3 { font-family: var(--letra-titulos); line-height: 1.2; margin: 0; }
+p { margin: 0 0 0.9em; }
+p:last-child { margin-bottom: 0; }
+
+.contenedor { width: 100%; max-width: var(--ancho, 1040px); margin: 0 auto; padding: 0 20px; }
+
+.saltar {
+  position: absolute; left: -9999px; top: 8px; z-index: 100;
+  background: var(--acento); color: #fff; padding: 8px 14px; border-radius: 6px;
+}
+.saltar:focus { left: 8px; }
+
+/* ---------- barra superior ---------- */
+.barra {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--barra-fondo, var(--fondo));
+  border-bottom: 1px solid var(--linea);
+  backdrop-filter: saturate(1.4) blur(10px);
+  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  transition: box-shadow 500ms var(--curva);
+}
+.barra--flotante { box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.18); }
+.centinela { height: 1px; margin-bottom: -1px; }
+.barra__int { display: flex; align-items: center; gap: 16px; min-height: 60px; }
+.barra__marca {
+  font-family: var(--letra-titulos); font-weight: 700; text-decoration: none;
+  color: var(--texto); white-space: nowrap; font-size: 1.05rem;
+}
+.barra__nav {
+  position: relative; display: flex; gap: 4px; margin-left: auto; overflow-x: auto;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.barra__nav::-webkit-scrollbar { display: none; }
+.barra__nav a {
+  position: relative; z-index: 1;
+  color: var(--texto-suave); text-decoration: none; font-size: 0.92rem;
+  padding: 6px 10px; border-radius: 999px; white-space: nowrap;
+  transition: color 300ms var(--curva), background-color 300ms var(--curva);
+}
+.barra__nav a:hover { color: var(--texto); background: var(--superficie); }
+.barra__nav a.activo { color: var(--acento); }
+.barra__nav a.activo:hover { background: transparent; }
+/* píldora que se desliza hasta la sección que estás leyendo */
+.barra__indicador {
+  position: absolute; left: 0; top: 0; z-index: 0; border-radius: 999px;
+  background: var(--acento-suave); opacity: 0; pointer-events: none;
+  transition: transform 600ms var(--curva), width 600ms var(--curva), height 600ms var(--curva), opacity 300ms var(--curva);
+}
+.barra__idioma {
+  flex: none; font: inherit; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.04em;
+  border: 1.5px solid var(--linea-fuerte); background: transparent; color: var(--texto);
+  border-radius: 999px; padding: 4px 12px; cursor: pointer;
+  transition: color 300ms var(--curva), border-color 300ms var(--curva), transform 300ms var(--curva);
+}
+.barra__idioma:active { transform: scale(0.94); }
+.barra__idioma:hover { border-color: var(--acento); color: var(--acento); }
+
+/* ---------- inicio (hero) ---------- */
+.hero { padding: 56px 0 40px; }
+.hero__int { display: flex; gap: 36px; align-items: center; }
+.hero__foto {
+  flex: none; width: 168px; height: 168px; border-radius: 50%; overflow: hidden;
+  background: var(--acento-suave); display: grid; place-items: center;
+}
+.hero__foto img { width: 100%; height: 100%; object-fit: cover; }
+.hero__iniciales { font-family: var(--letra-titulos); font-size: 3.2rem; font-weight: 700; color: var(--acento); }
+.hero__saludo { color: var(--acento); font-weight: 600; margin-bottom: 4px; }
+.hero__nombre { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.02em; }
+.hero__titular { font-size: 1.15rem; color: var(--texto-suave); margin: 8px 0 4px; }
+.hero__ubicacion { font-size: 0.95rem; color: var(--texto-suave); }
+.hero__bio { max-width: 62ch; margin-top: 14px; }
+.hero__acciones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+
+.boton {
+  display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: 999px;
+  font-weight: 600; font-size: 0.95rem; text-decoration: none;
+  border: 1.5px solid var(--acento); color: var(--acento); background: transparent;
+  transition: background-color 300ms var(--curva), color 300ms var(--curva), border-color 300ms var(--curva),
+    transform 300ms var(--curva), box-shadow 300ms var(--curva);
+}
+.boton:hover { background: var(--acento-suave); transform: translateY(-2px); }
+.boton:active { transform: translateY(0) scale(0.98); transition-duration: 100ms; }
+.boton--principal { background: var(--acento); color: var(--sobre-acento, #fff); }
+.boton--principal:hover {
+  background: var(--acento-oscuro, var(--acento)); color: var(--sobre-acento, #fff);
+  box-shadow: 0 10px 24px -10px var(--acento);
+}
+.boton--suave { border-color: var(--linea-fuerte); color: var(--texto); }
+.boton--suave:hover { border-color: var(--acento); color: var(--acento); background: transparent; }
+
+.cifras { list-style: none; padding: 0; margin: 26px 0 0; display: flex; flex-wrap: wrap; gap: 12px; }
+.cifra {
+  display: flex; flex-direction: column; min-width: 120px; padding: 12px 16px;
+  border-radius: var(--radio, 12px); background: var(--superficie); border: 1px solid var(--linea);
+}
+.cifra__numero { font-family: var(--letra-titulos); font-size: 1.6rem; font-weight: 700; color: var(--acento); line-height: 1.1; }
+.cifra__texto { font-size: 0.85rem; color: var(--texto-suave); line-height: 1.35; }
+
+/* ---------- secciones ---------- */
+.seccion { padding: 44px 0; }
+.seccion__titulo { font-size: 1.6rem; margin-bottom: 20px; }
+.seccion__intro { color: var(--texto-suave); max-width: 68ch; margin-top: -8px; margin-bottom: 22px; }
+.texto { max-width: 70ch; }
+
+/* listas: experiencia, formación, premios... */
+.lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+.item__cab { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; }
+.item__titulo { font-size: 1.1rem; font-family: var(--letra-texto); font-weight: 700; }
+.item__fecha { font-size: 0.9rem; color: var(--texto-suave); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.item__lugar { color: var(--acento); font-weight: 600; font-size: 0.97rem; margin: 2px 0 6px; }
+.item__desc { color: var(--texto); }
+.item__logros { margin: 8px 0 0; padding-left: 1.2em; }
+.item__logros li { margin-bottom: 4px; }
+.item__logros li::marker { color: var(--acento); }
+
+.enlaces { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; }
+.enlace-flecha { font-weight: 600; font-size: 0.93rem; text-decoration: none; }
+.enlace-flecha::after { content: "→"; display: inline-block; margin-left: 4px; transition: transform 300ms var(--curva); }
+.enlace-flecha:hover::after { transform: translateX(4px); }
+.enlace-flecha:hover { text-decoration: underline; }
+
+/* publicaciones */
+.pubs { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.pub { padding-left: 16px; border-left: 3px solid var(--acento-suave); }
+.pub__tipo {
+  display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--acento); background: var(--acento-suave); padding: 2px 8px; border-radius: 4px; margin-bottom: 6px;
+}
+.pub__ref { margin: 0; }
+.pub__titulo { font-weight: 600; }
+.pub__nota { font-size: 0.93rem; color: var(--texto-suave); margin-top: 4px; }
+
+/* proyectos */
+.tarjetas { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+.tarjeta {
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--tarjeta, var(--superficie)); border: 1px solid var(--linea); border-radius: var(--radio, 12px);
+}
+.tarjeta__img {
+  width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: var(--acento-suave);
+  transition: transform 900ms var(--curva);
+}
+.tarjeta:hover .tarjeta__img { transform: scale(1.04); }
+.tarjeta__cuerpo { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; }
+.tarjeta__titulo { font-size: 1.2rem; margin: 6px 0 6px; }
+.tarjeta__resumen { color: var(--texto-suave); }
+.etiquetas { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.etiquetas li {
+  font-size: 0.75rem; font-weight: 600; padding: 2px 9px; border-radius: 999px;
+  background: var(--acento-suave); color: var(--acento-texto, var(--acento));
+}
+.star { margin: 12px 0 0; display: grid; gap: 10px; }
+.star__fila dt { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--texto-suave); }
+.star__fila dd { margin: 2px 0 0; font-size: 0.95rem; }
+.star__fila--resultado dd { font-weight: 600; }
+.star__fila--resultado dt { color: var(--acento); }
+.tarjeta .enlaces { margin-top: auto; padding-top: 14px; }
+
+/* habilidades */
+.habilidades { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; }
+.habilidades__nombre { font-size: 0.95rem; font-family: var(--letra-texto); font-weight: 700; margin-bottom: 10px; }
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  font-size: 0.9rem; padding: 4px 12px; border-radius: 999px;
+  background: var(--superficie); border: 1px solid var(--linea);
+  transition: border-color 300ms var(--curva), color 300ms var(--curva);
+}
+.chip:hover { border-color: var(--acento); color: var(--acento); }
+
+/* contacto */
+.contacto { max-width: 62ch; }
+
+/* pie */
+.pie { border-top: 1px solid var(--linea); padding: 28px 0 36px; margin-top: 24px; font-size: 0.9rem; color: var(--texto-suave); }
+.pie__int { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+.pie p { margin: 0; }
+
+/* frase grande (tipo: "frase" en contenido.js) */
+.seccion--frase { padding: 80px 0; }
+.frase {
+  font-family: var(--letra-titulos); font-weight: 700; font-size: clamp(1.875rem, 1.1rem + 3.2vw, 3rem);
+  line-height: 1.15; letter-spacing: -0.02em; max-width: 680px; margin: 0; text-wrap: balance;
+}
+.frase__color { color: var(--acento); }
+
+/* ============================================================
+   MOVIMIENTO
+   script.js añade .animar a <html> solo si el navegador lo soporta
+   y la persona no pidió reducir movimiento. Sin esa clase todo se ve quieto.
+   ============================================================ */
+
+/* portada: entra por partes al cargar */
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(24px); filter: blur(8px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+@keyframes aparecer-foto {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: none; }
+}
+.entrada .hero__texto > * { animation: aparecer 900ms var(--curva) both; animation-delay: calc(var(--i, 0) * 90ms + 100ms); }
+.entrada .hero__foto { animation: aparecer-foto 1000ms var(--resorte) both; }
+.cifra__numero { font-variant-numeric: tabular-nums; }
+
+/* bloques que suben y se enfocan al entrar en pantalla */
+.animar .revelar {
+  transition: opacity 900ms var(--curva), transform 900ms var(--curva), filter 900ms var(--curva);
+  transition-delay: var(--retraso, 0ms);
+}
+.animar .revelar:not(.visible) { opacity: 0; transform: translateY(48px); filter: blur(10px); }
+
+/* habilidades: los chips aparecen uno tras otro */
+.animar .habilidades__grupo.revelar .chip {
+  transition: opacity 600ms var(--curva), transform 600ms var(--resorte);
+  transition-delay: calc(var(--retraso, 0ms) + 200ms + var(--j, 0) * 40ms);
+}
+.animar .habilidades__grupo.revelar:not(.visible) .chip { opacity: 0; transform: translateY(12px) scale(0.9); }
+
+/* proyectos: situación, acción, resultado y aprendizaje en secuencia */
+.star__fila:nth-child(2) { --k: 1; }
+.star__fila:nth-child(3) { --k: 2; }
+.star__fila:nth-child(4) { --k: 3; }
+.animar .tarjeta.revelar .star__fila {
+  transition: opacity 700ms var(--curva), transform 700ms var(--curva);
+  transition-delay: calc(var(--retraso, 0ms) + 300ms + var(--k, 0) * 110ms);
+}
+.animar .tarjeta.revelar:not(.visible) .star__fila { opacity: 0; transform: translateY(12px); }
+
+/* frase: las palabras empiezan tenues y se encienden al bajar */
+.animar .frase__palabra { opacity: 0.28; transition: opacity 600ms var(--curva); }
+.animar .frase__palabra.encendida { opacity: 1; }
+
+/* barra de progreso de lectura (navegadores que lo soportan, sin JavaScript) */
+@supports (animation-timeline: scroll()) {
+  .barra::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+    background: var(--acento); transform-origin: 0 50%; transform: scaleX(0);
+    animation: progreso linear both;
+    animation-timeline: scroll(root);
+  }
+  @keyframes progreso { to { transform: scaleX(1); } }
+}
+
+/* error de contenido.js */
+.error-carga {
+  max-width: 680px; margin: 60px auto; padding: 28px; border-radius: 12px;
+  background: #fff4f2; border: 2px solid #d9442b; color: #3a1a14; font-family: system-ui, sans-serif;
+}
+.error-carga h1 { font-size: 1.4rem; margin-bottom: 12px; font-family: inherit; }
+.error-carga pre { white-space: pre-wrap; background: #fff; padding: 12px; border-radius: 8px; font-size: 0.85rem; }
+.sin-js { max-width: 600px; margin: 60px auto; padding: 0 20px; font-family: system-ui, sans-serif; }
+
+/* ---------- celular ---------- */
+@media (max-width: 720px) {
+  body { font-size: 1rem; }
+  .barra__int { gap: 10px; }
+  .barra__marca { display: none; }
+  .barra__nav { margin-left: 0; flex: 1; }
+  .hero { padding: 32px 0 20px; }
+  .hero__int { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .hero__foto { width: 112px; height: 112px; }
+  .hero__iniciales { font-size: 2.3rem; }
+  .seccion { padding: 32px 0; }
+  .seccion__titulo { font-size: 1.4rem; }
+  .tarjetas { grid-template-columns: 1fr; }
+  .cifra { min-width: 0; flex: 1 1 40%; }
+}
+
+/* ---------- "reducir movimiento" activado en el sistema ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-iteration-count: 1 !important; transition-duration: 1ms !important; transition-delay: 0ms !important; }
+  .boton:hover, .tarjeta:hover .tarjeta__img { transform: none; }
+  .hero::before, .hero::after, .hero__foto { animation: none !important; }
+}
+
+/* ---------- impresión (Ctrl + P) ---------- */
+@media print {
+  .barra, .hero__acciones, .saltar, .barra__idioma { display: none !important; }
+  .revelar, .frase__palabra, .chip, .star__fila, .hero__texto > *, .hero__foto {
+    opacity: 1 !important; transform: none !important; filter: none !important; animation: none !important;
+  }
+  body { background: #fff; color: #000; }
+  .seccion { padding: 16px 0; break-inside: avoid-page; }
+  .tarjeta { break-inside: avoid; }
+}
+
+/* ============================================================
+   TEMA: ACADÉMICA
+   Minimalista, tipografía serif, barra lateral con tus datos.
+   ============================================================ */
+:root {
+  --acento: #1f6f68;
+  --acento-oscuro: #17544f;
+  --acento-suave: #e3efec;
+  --fondo: #fbfaf6;
+  --barra-fondo: rgba(251, 250, 246, 0.9);
+  --superficie: #f2f0ea;
+  --texto: #1d2124;
+  --texto-suave: #5b6166;
+  --linea: #e4e1d8;
+  --linea-fuerte: #cfcabd;
+  --letra-titulos: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --letra-texto: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ancho: 1120px;
+  --radio: 8px;
+}
+
+.hero__nombre { font-weight: 600; }
+.seccion__titulo {
+  position: relative; font-weight: 600; padding-bottom: 10px; border-bottom: 1px solid var(--linea);
+}
+/* trazo de color bajo cada título, que se dibuja al aparecer */
+.seccion__titulo::after {
+  content: ""; position: absolute; left: 0; bottom: -1px; width: 48px; height: 2px; background: var(--acento);
+  transform-origin: left center;
+  transition: transform 900ms var(--curva) calc(var(--retraso, 0ms) + 250ms);
+}
+.animar .seccion__titulo.revelar:not(.visible)::after { transform: scaleX(0); }
+.pub { transition: border-color 300ms var(--curva); }
+.pub:hover { border-left-color: var(--acento); }
+.frase { font-weight: 600; letter-spacing: -0.01em; }
+.hero__foto { transition: box-shadow 500ms var(--curva); }
+.hero__foto:hover { box-shadow: 0 0 0 6px var(--acento-suave); }
+.item { padding-bottom: 20px; border-bottom: 1px dashed var(--linea); }
+.item:last-child { border-bottom: 0; padding-bottom: 0; }
+.cifra { background: transparent; }
+
+@media (min-width: 900px) {
+  .plantilla-academica main {
+    display: grid; grid-template-columns: 290px minmax(0, 1fr); column-gap: 64px;
+    max-width: var(--ancho); margin: 0 auto; padding: 0 20px;
+  }
+  .plantilla-academica main .contenedor { max-width: none; padding: 0; }
+  .plantilla-academica .hero {
+    grid-column: 1; grid-row: 1 / span 40; align-self: start; padding: 44px 0 24px;
+  }
+  .plantilla-academica .seccion { grid-column: 2; padding: 44px 0 20px; }
+  .plantilla-academica .hero__int { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .plantilla-academica .hero__foto { width: 150px; height: 150px; }
+  .plantilla-academica .hero__nombre { font-size: 2.1rem; }
+  .plantilla-academica .hero__titular { font-size: 1.02rem; }
+  .plantilla-academica .hero__bio { font-size: 0.97rem; }
+  .plantilla-academica .hero .hero__acciones { flex-direction: column; align-items: stretch; }
+  .plantilla-academica .hero .hero__acciones .boton { justify-content: center; }
+  .plantilla-academica .cifras { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .plantilla-academica .cifra { min-width: 0; padding: 10px 12px; }
+}
+@media (min-width: 900px) and (min-height: 760px) {
+  .plantilla-academica .hero { position: sticky; top: 60px; }
+}
