@@ -1,19 +1,3 @@
-/* =====================================================================
-   TU PORTAFOLIO · PLANTILLA ACADÉMICA
-   Este es el ÚNICO archivo que necesitas editar.
-
-   REGLAS RÁPIDAS
-   1. Cambia solo el texto que está entre comillas "así".
-   2. Los textos bilingües se escriben así: { es: "Hola", en: "Hello" }.
-      Si solo quieres un idioma, deja  idiomas: ["es"]  más abajo.
-   3. No borres comas, llaves { } ni corchetes [ ]. Cada bloque termina en coma.
-   4. Para ocultar una sección o un elemento sin borrarlo: mostrar: false
-   5. Dentro de un texto puedes usar **negrita** y [un enlace](https://...).
-   6. Si la página sale en blanco o con un aviso rojo, pega este archivo en tu IA
-      y pídele: "corrige la sintaxis sin cambiar el contenido".
-
-   ===================================================================== */
-
 window.CONTENIDO = {
   idiomas: ["en"],
   colorPrincipal: "#1f6f68",
